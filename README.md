@@ -1,51 +1,94 @@
-# Optimizing-Fire-Station-Efficiency
-🔥 Fire Station Efficiency Analysis
+# Optimizing Fire Station Efficiency
+**Bryan Tran · Addison Amadi**
+UNC Charlotte — Undergraduate Research | Mentor: Xingjie Li
 
-Bryan Tran · Addison Amadi
-UNC Charlotte — Undergraduate Research
+---
 
-📌 Overview
+## Overview
+Growing up watching Charlotte expand outward in real time, and spending
+freshman year getting evacuated from a dorm at 2am every time someone
+burnt popcorn, you start to actually wonder — how fast do those trucks
+get here, and are the stations even in the right places anymore? That
+question turned out to have a rigorous mathematical answer. This project
+applies Optimal Transport, a framework originally built to solve abstract
+resource allocation problems, to four years of real Charlotte Fire
+Department incident records to evaluate whether the city's 43 fire
+stations are spatially aligned with where emergencies actually occur —
+and to quantify exactly where they are not.
 
-Geospatial analysis of Charlotte fire incidents (2021–2025) to evaluate station coverage efficiency and identify spatial mismatches between demand and response infrastructure.
+> Full methodology described in the accompanying research report.
 
-Core approach: model incident demand → station allocation using optimal transport.
+---
 
-🧰 Tech Stack
-Python (pandas, geopandas, matplotlib)
-Spatial: pyproj, contextily
-Optimization: POT (Python Optimal Transport)
-📂 Structure
-.
-├── Undergrad_Research_Rewrite.ipynb
-├── CFD_incidents.csv
-├── Current_CFD_Fire_Stations.csv
-└── README.md
+## Tech Stack
+| Area | Libraries |
+|---|---|
+| Data | pandas, geopandas |
+| Visualization | matplotlib, contextily |
+| Spatial | pyproj (EPSG:2264 — NAD83 NC State Plane) |
+| Optimization | [POT: Python Optimal Transport](https://pythonot.github.io/) v0.9.5 |
 
-⚙️ Setup
-pip install pandas geopandas matplotlib contextily pyproj pot
-jupyter notebook Undergrad_Research_Rewrite.ipynb
+---
 
-🔄 Pipeline
-Ingest — ArcGIS API → incident dataset
-Clean — timestamps, filtering, validation
-EDA — temporal + spatial distributions
-Geo Processing — reprojection (EPSG:2264 → 3857)
-Modeling — optimal transport for demand allocation
-Analysis — detect over/under-served regions
 
-📊 Outputs
-Incident density maps
-Station vs. demand overlays
-Transport-based efficiency insights
-Coverage gap identification
+## Setup
+```bash
+pip install -r requirements.txt
+jupyter notebook notebooks/Undergrad_Research_Rewrite.ipynb
+```
 
-⚠️ Assumptions
-Uniform station capacity
-Euclidean distance (no road network)
-Static demand (no forecasting)
+**requirements.txt**
+```
+pot==0.9.5
+pandas
+geopandas
+matplotlib
+contextily
+pyproj
+jupyter
+```
 
-🚀 Next Steps
-Network-based travel times
-Capacity-constrained optimization
-Demand prediction models
-Station placement optimization
+---
+
+## Data
+The CFD incident dataset was provided directly by the Charlotte Fire
+Department for research purposes and is **not included in this repository**.
+Station location data (`Current_CFD_Fire_Stations.csv`) is included.
+
+To reproduce results, contact the Charlotte Fire Department directly or
+refer to `data/README.md` for the expected schema and a synthetic sample
+dataset you can use to run the pipeline end to end.
+
+---
+
+
+## Next Steps
+- Road-network travel times via OSRM
+- Heterogeneous station capacity weights proportional to apparatus count
+- Severity-adjusted incident demand using NFIRS type codes
+- Weekly and daily OT resolution for stations near dynamic demand generators
+- Statistical correlation analysis of efficiency drivers
+- Station placement optimization for projected demand growth
+
+---
+
+## Citation
+If you use this work, please cite:
+
+Tran, B. & Amadi, A. (2025). *Optimizing Fire Station Efficiency*.
+UNC Charlotte Undergraduate Research.
+
+POT library (software):
+Flamary R., Vincent-Cuaz C., Courty N., Gramfort A., Kachaiev O., Quang Tran H.,
+David L., Bonet C., Cassereau N., Gnassounou T., Tanguy E., Delon J., Collas A.,
+Mazelet S., Chapel L., Kerdoncuff T., Yu X., Feickert M., Krzakala P., Liu T.,
+Fernandes Montesuma E. POT Python Optimal Transport (version 0.9.5).
+URL: https://github.com/PythonOT/POT
+
+POT library (paper):
+Flamary R., Courty N., Gramfort A., Alaya M.Z., Boisbunon A., Chambon S.,
+Chapel L., Corenflos A., Fatras K., Fournier N., Gautheron L., Gayraud N.T.H.,
+Janati H., Rakotomamonjy A., Redko I., Rolet A., Schutz A., Seguy V.,
+Sutherland D.J., Tavenard R., Tong A., Vayer T. POT Python Optimal Transport
+library. Journal of Machine Learning Research, 22(78):1-8, 2021.
+URL: https://pythonot.github.io/
