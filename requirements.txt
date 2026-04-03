@@ -1,0 +1,7 @@
+pot==0.9.5
+pandas
+geopandas
+matplotlib
+contextily
+pyproj
+jupyter
